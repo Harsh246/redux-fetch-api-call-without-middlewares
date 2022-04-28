@@ -1,0 +1,33 @@
+the approach should be that the action creator will be an async function, so it will return me a promise.
+
+that promise will get resolved into the desired action object.
+
+inside app.js we will call that action creator first, that resolve the result and dispatch the result inside then only.
+
+********second approach is passing dispatch as one of the parameter,
+ const mapdis = (dispatch)=>
+ {
+   return{
+     fetchdata: fetchdata(dispatch)
+   }
+ }
+ export default connect(mapState, mapdis)(App);
+ 
+ and simply call it using props:
+ 
+  <button type="button" onClick={()=> this.props.dispatch(fetchdata())}>fetch courses</button>
+ 
+something like this:
+
+  export async function  fetchdata(dispatch)
+  {
+
+    let resp = fetch("https://jsonplaceholder.typicode.com/users");
+
+resp.then((res)=>res.json())
+.then((data)=>
+{
+  dispatch(adddata(data))
+})
+
+  }
